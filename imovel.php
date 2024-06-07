@@ -1,41 +1,16 @@
 <?php
 
-require_once "imovel.php"
+abstract class imovel{
 
-class Apartamento extends Imovel{
+    abstract public function save();
 
-    private $bloco;
-    private $andar;
-    private $metragem
-    private $nGaragem
+    abstract public function remove($id);
 
-    public function getEndereco(){
-        return $this->endereco;
+    abstract public function find($id);
 
-    }
-     public function setEndereco($endereco){
-        $this->endereco = $endereco
-     }
+    abstract public function count();
 
-     public function setEndereco($endereco){
-        $this->endereco = $endereco;
-
-     }
-
-     public function getNQuartos(){
-        return $this->nQuartos;
-     }
-
-     public function setNQuartos($nQuartos) {
-        $this->nQuartos = $nQuartos;
-
-     }
-
-     public function getMetragem(){
-        return $this->metragem;
-     }
-
+    abstract public function listAll();
 }
-
 
 ?>
