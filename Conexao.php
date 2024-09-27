@@ -5,16 +5,16 @@ class Conexao{
     private $username = "root";
     private $password = "HORTETEC_115";
     private $database = "imobiliaria";
-    private $connection;
+    private $conection;
 
-    public function getConnection(){
-        if(is_null($this->connection)){
-            $this->connection = new POD('mysql:host='.$this->servername. '; dbname='.$this->database, $this->username, $this->password );
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXPECTION);
-            $this->connection->exce('set names utf8');
 
+    public function getConection(){
+        if(is_null($this->conection)){
+            $this->conection = new PDO('mysql:host='.$this->servername.';dbname='.$this->database, $this->username, $this->password);
+            $this->conection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->conection->exec('set names utf8');
         }
-        return $this->connection;
+        return $this->conection;
     }
 }
 

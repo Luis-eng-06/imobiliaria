@@ -1,34 +1,62 @@
 <?php
+session_start();
+
+//importa o Controllers
 require_once 'controller/UsuarioController.php';
-?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
-    <?php
-    if(isset($_GET['action'])){
-        if($_GET['action'] == 'editar'){
-            $usuario = call_user_func(array('UsuarioController','editar'),$_GET['id']);
+require_once 'controller/ImovelController.php';
+//adiciona o cabeçalho
+require_once 'header.php';
+
+if(isset($_SESSION['logado']) && $_SESSION['logado'] == true){
+    require_once 'view/menu.php';
+    if(isset($_GET['page'])){
+        if($_GET['page']=='usuario'){
+            if(isset($_GET['action'])){
+                if($_GET['action'] == 'editar'){
+                    //Chama uma função PHP que permite informar a classe e o Método que será acionado
+                    $usuario = call_user_func(array('UsuarioController','editar'), $_GET['id']);  
+                    require_once 'view/cadUsuario.php';
+                }
+                if($_GET['action'] == 'listar'){
+                    require_once 'view/listUsuario.php';
+                }
+        
+                if($_GET['action'] == 'excluir'){
+                    //Chama uma função PHP que permite informar a classe e o Método que será acionado
+                    $usuario = call_user_func(array('UsuarioController','excluir'), $_GET['id']);  
+                    require_once 'view/listUsuario.php';
+                }
+            }else{
+                require_once 'view/cadUsuario.php';
+            }
+        }elseif($_GET['page']=='imovel'){
+            if(isset($_GET['action'])){
+                if($_GET['action'] == 'editar'){
+                    //Chama uma função PHP que permite informar a classe e o Método que será acionado
+                    $imovel = call_user_func(array('ImovelController','editar'), $_GET['id']);  
+                    require_once 'view/cadImovel.php';
+                }
+                if($_GET['action'] == 'listar'){
+                    require_once 'view/listImovel.php';
+                }
+        
+                if($_GET['action'] == 'excluir'){
+                    //Chama uma função PHP que permite informar a classe e o Método que será acionado
+                    $imovel = call_user_func(array('ImovelController','excluir'), $_GET['id']);  
+                    require_once 'view/listImovel.php';
+                }
+            }else{
+                require_once 'view/cadImovel.php';
+            }
         }
 
-        if($_GET['action'] == 'listar'){
-            require_once 'view/listUsuario.php';
-        }
-
-        if($_GET['action'] == 'excluir'){
-            $usuario = call_user_func(array('UsuarioController','excluir'),$_GET['id']);
-            require_once 'view/listUsuario.php';
-        }
-
-    }else{
-        require_once 'view/cadUsuario.php';
     }
-    ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
-</html>
+}else{
+    if(isset($_GET['logar'])){
+        require_once 'view/login.php';
+    }else{
+        require_once 'principal.php';
+    }
+}
+
+require_once 'footer.php';
